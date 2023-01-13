@@ -1,8 +1,11 @@
 const express = require('express')
+require('./db/mongoose')
 const http = require('http')
 const path = require('path')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
+const userRouter = require('./routers/user')
+// const roomRouter = require('./routers/room')
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
@@ -68,6 +71,8 @@ io.on('connection', (socket) => {
 })
 
 app.use(express.json())
+app.use(userRouter)
+// app.use(roomRouter)
 
 app.get('', (req, res) => {
     res.render('index', {
