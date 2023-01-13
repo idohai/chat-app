@@ -2,7 +2,7 @@
 const $loginForm = document.getElementById('login-form')
 const $emailInput = document.getElementById('email-input')
 const $passwordInput = document.getElementById('pass-input')
-// const $roomInput = document.getElementById('room-input')
+const $roomInput = document.getElementById('room-input')
 
 
 $loginForm.addEventListener('submit', (e) => {
@@ -21,8 +21,9 @@ $loginForm.addEventListener('submit', (e) => {
         })
         .then(response => response.json())
         .then(response => {
+            console.log(response.user)
             localStorage.setItem('token', response.token )
-            window.open('../chat.html', '_self')
+            window.open(`../chat.html?username=${response.user.name}&room=${$roomInput.value}`, '_self')
         })
         .catch(err => {
             alert('bad login')
